@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE_USE, ElementType.TYPE_PARAMETER})
 @Documented
-public @interface Nullable {}
+public @interface Nullable {
+}

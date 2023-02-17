@@ -1,16 +1,16 @@
 /*
  * Copyright (C) 2009-2017 The Project Lombok Authors.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -43,7 +43,7 @@ import java.lang.annotation.Target;
  *     return new String(bytes, "UTF-8");
  * }
  * </pre>
- * 
+ * <p>
  * Becomes:
  * <pre>
  * public String utf8ToString(byte[] bytes) {
@@ -59,9 +59,11 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
 @Retention(RetentionPolicy.SOURCE)
 public @interface SneakyThrows {
-	/** @return The exception type(s) you want to sneakily throw onward. */
-	Class<? extends Throwable>[] value() default java.lang.Throwable.class;
-	
-	//The fully qualified name is used for java.lang.Throwable in the parameter only. This works around a bug in javac:
-	//   presence of an annotation processor throws off the type resolver for some reason.
+    /**
+     * @return The exception type(s) you want to sneakily throw onward.
+     */
+    Class<? extends Throwable>[] value() default java.lang.Throwable.class;
+
+    //The fully qualified name is used for java.lang.Throwable in the parameter only. This works around a bug in javac:
+    //   presence of an annotation processor throws off the type resolver for some reason.
 }

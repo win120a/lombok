@@ -10,9 +10,9 @@ import lombok.experimental.WithBy;
 @With
 @WithBy
 public class A {
-	private String string;
-	
-	public void a() {
-		string = "a";
-	}
+    private String string;
+
+    public void a() {
+        string = "a";
+    }
 }

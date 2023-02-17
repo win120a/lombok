@@ -1,11 +1,11 @@
-@lombok.EqualsAndHashCode(of={"x"})
+@lombok.EqualsAndHashCode(of = {"x"})
 final class EqualsAndHashCodeOf {
-	int x;
-	int y;
+    int x;
+    int y;
 }
 
-@lombok.EqualsAndHashCode(exclude={"y"})
+@lombok.EqualsAndHashCode(exclude = {"y"})
 final class EqualsAndHashCodeExclude {
-	int x;
-	int y;
+    int x;
+    int y;
 }

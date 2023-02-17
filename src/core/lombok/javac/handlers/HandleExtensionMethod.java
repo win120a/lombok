@@ -1,16 +1,16 @@
 /*
  * Copyright (C) 2012-2021 The Project Lombok Authors.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -67,162 +67,163 @@ import com.sun.tools.javac.tree.JCTree.JCMethodInvocation;
 @Provides
 @HandlerPriority(66560) // 2^16 + 2^10; we must run AFTER HandleVal which is at 2^16
 public class HandleExtensionMethod extends JavacAnnotationHandler<ExtensionMethod> {
-	@Override
-	public void handle(final AnnotationValues<ExtensionMethod> annotation, final JCAnnotation source, final JavacNode annotationNode) {
-		handleExperimentalFlagUsage(annotationNode, ConfigurationKeys.EXTENSION_METHOD_FLAG_USAGE, "@ExtensionMethod");
-		
-		deleteAnnotationIfNeccessary(annotationNode, ExtensionMethod.class);
-		JavacNode typeNode = annotationNode.up();
-		boolean isClassOrEnumOrInterface = isClassOrEnumOrInterface(typeNode);
-		
-		if (!isClassOrEnumOrInterface) {
-			annotationNode.addError("@ExtensionMethod can only be used on a class or an enum or an interface");
-			return;
-		}
-		
-		boolean suppressBaseMethods = annotation.getInstance().suppressBaseMethods();
-		
-		List<Object> extensionProviders = annotation.getActualExpressions("value");
-		if (extensionProviders.isEmpty()) {
-			annotationNode.addError(String.format("@%s has no effect since no extension types were specified.", ExtensionMethod.class.getName()));
-			return;
-		}
-		final List<Extension> extensions = getExtensions(annotationNode, extensionProviders);
-		if (extensions.isEmpty()) return;
-		
-		new ExtensionMethodReplaceVisitor(annotationNode, extensions, suppressBaseMethods).replace();
-		
-		annotationNode.rebuild();
-	}
-	
-	
-	public List<Extension> getExtensions(final JavacNode typeNode, final List<Object> extensionProviders) {
-		List<Extension> extensions = new ArrayList<Extension>();
-		for (Object extensionProvider : extensionProviders) {
-			if (!(extensionProvider instanceof JCFieldAccess)) continue;
-			JCFieldAccess provider = (JCFieldAccess) extensionProvider;
-			if (!("class".equals(provider.name.toString()))) continue;
-			Type providerType = CLASS.resolveMember(typeNode, provider.selected);
-			if (providerType == null) continue;
-			if ((providerType.tsym.flags() & (INTERFACE | ANNOTATION)) != 0) continue;
-			
-			extensions.add(getExtension(typeNode, (ClassType) providerType));
-		}
-		return extensions;
-	}
-	
-	public Extension getExtension(final JavacNode typeNode, final ClassType extensionMethodProviderType) {
-		List<MethodSymbol> extensionMethods = new ArrayList<MethodSymbol>();
-		TypeSymbol tsym = extensionMethodProviderType.asElement();
-		if (tsym != null) for (Symbol member : tsym.getEnclosedElements()) {
-			if (member.getKind() != ElementKind.METHOD) continue;
-			MethodSymbol method = (MethodSymbol) member;
-			if ((method.flags() & STATIC) == 0) continue;
-			if ((method.flags() & PUBLIC) == 0) continue;
-			if (method.params().isEmpty()) continue;
-			extensionMethods.add(method);
-		}
-		return new Extension(extensionMethods, tsym);
-	}
-	
-	private static class Extension {
-		final List<MethodSymbol> extensionMethods;
-		final TypeSymbol extensionProvider;
-		
-		public Extension(List<MethodSymbol> extensionMethods, TypeSymbol extensionProvider) {
-			this.extensionMethods = extensionMethods;
-			this.extensionProvider = extensionProvider;
-		}
-	}
-	
-	private static class ExtensionMethodReplaceVisitor extends TreeScanner<Void, Void> {
-		final JavacNode annotationNode;
-		final List<Extension> extensions;
-		final boolean suppressBaseMethods;
-		
-		public ExtensionMethodReplaceVisitor(JavacNode annotationNode, List<Extension> extensions, boolean suppressBaseMethods) {
-			this.annotationNode = annotationNode;
-			this.extensions = extensions;
-			this.suppressBaseMethods = suppressBaseMethods;
-		}
-		
-		public void replace() {
-			annotationNode.up().get().accept(this, null);
-		}
-		
-		@Override
-		public Void visitMethodInvocation(final MethodInvocationTree tree, final Void p) {
-			super.visitMethodInvocation(tree, p);
-			handleMethodCall((JCMethodInvocation) tree);
-			return null;
-		}
-		
-		private void handleMethodCall(final JCMethodInvocation methodCall) {
-			JavacNode methodCallNode = annotationNode.getAst().get(methodCall);
-			
-			if (methodCallNode == null) {
-				// This should mean the node does not exist in the source at all. This is the case for generated nodes, such as implicit super() calls.
-				return;
-			}
-			
-			JavacNode surroundingType = upToTypeNode(methodCallNode);
-			
-			TypeSymbol surroundingTypeSymbol = ((JCClassDecl)surroundingType.get()).sym;
-			JCExpression receiver = receiverOf(methodCall);
-			String methodName = methodNameOf(methodCall);
-			
-			if ("this".equals(receiver.toString()) || "this".equals(methodName) || "super".equals(methodName)) return;
-			Map<JCTree, JCTree> resolution = new JavacResolution(methodCallNode.getContext()).resolveMethodMember(methodCallNode);
-			
-			JCTree resolvedMethodCall = resolution.get(methodCall);
-			if (resolvedMethodCall == null || resolvedMethodCall.type == null) return;
-			if (!suppressBaseMethods && !(resolvedMethodCall.type instanceof ErrorType)) return;
-			
-			JCTree resolvedReceiver = resolution.get(receiver);
-			if (resolvedReceiver == null || resolvedReceiver.type == null) return;
-			Type receiverType = resolvedReceiver.type;
-			
-			// Skip static method access
-			Symbol sym = null;
-			if (resolvedReceiver instanceof JCIdent) {
-				sym = ((JCIdent) resolvedReceiver).sym;
-			} else if (resolvedReceiver instanceof JCFieldAccess) {
-				sym = ((JCFieldAccess) resolvedReceiver).sym;
-			}
-			if (sym instanceof ClassSymbol) return;
-			
-			Types types = Types.instance(annotationNode.getContext());
-			for (Extension extension : extensions) {
-				TypeSymbol extensionProvider = extension.extensionProvider;
-				if (surroundingTypeSymbol == extensionProvider) continue;
-				for (MethodSymbol extensionMethod : extension.extensionMethods) {
-					if (!methodName.equals(extensionMethod.name.toString())) continue;
-					Type extensionMethodType = extensionMethod.type;
-					if (!MethodType.class.isInstance(extensionMethodType) && !ForAll.class.isInstance(extensionMethodType)) continue;
-					Type firstArgType = types.erasure(extensionMethodType.asMethodType().argtypes.get(0));
-					if (!types.isAssignable(receiverType, firstArgType)) continue;
-					methodCall.args = methodCall.args.prepend(receiver);
-					methodCall.meth = chainDotsString(annotationNode, extensionProvider.toString() + "." + methodName);
-					recursiveSetGeneratedBy(methodCall.meth, methodCallNode);
-					return;
-				}
-			}
-		}
-		
-		private String methodNameOf(final JCMethodInvocation methodCall) {
-			if (methodCall.meth instanceof JCIdent) {
-				return ((JCIdent) methodCall.meth).name.toString();
-			} else {
-				return ((JCFieldAccess) methodCall.meth).name.toString();
-			}
-		}
-		
-		private JCExpression receiverOf(final JCMethodInvocation methodCall) {
-			if (methodCall.meth instanceof JCIdent) {
-				return annotationNode.getTreeMaker().Ident(annotationNode.toName("this"));
-			} else {
-				return ((JCFieldAccess) methodCall.meth).selected;
-			}
-		}
-	}
+    @Override
+    public void handle(final AnnotationValues<ExtensionMethod> annotation, final JCAnnotation source, final JavacNode annotationNode) {
+        handleExperimentalFlagUsage(annotationNode, ConfigurationKeys.EXTENSION_METHOD_FLAG_USAGE, "@ExtensionMethod");
+
+        deleteAnnotationIfNeccessary(annotationNode, ExtensionMethod.class);
+        JavacNode typeNode = annotationNode.up();
+        boolean isClassOrEnumOrInterface = isClassOrEnumOrInterface(typeNode);
+
+        if (!isClassOrEnumOrInterface) {
+            annotationNode.addError("@ExtensionMethod can only be used on a class or an enum or an interface");
+            return;
+        }
+
+        boolean suppressBaseMethods = annotation.getInstance().suppressBaseMethods();
+
+        List<Object> extensionProviders = annotation.getActualExpressions("value");
+        if (extensionProviders.isEmpty()) {
+            annotationNode.addError(String.format("@%s has no effect since no extension types were specified.", ExtensionMethod.class.getName()));
+            return;
+        }
+        final List<Extension> extensions = getExtensions(annotationNode, extensionProviders);
+        if (extensions.isEmpty()) return;
+
+        new ExtensionMethodReplaceVisitor(annotationNode, extensions, suppressBaseMethods).replace();
+
+        annotationNode.rebuild();
+    }
+
+
+    public List<Extension> getExtensions(final JavacNode typeNode, final List<Object> extensionProviders) {
+        List<Extension> extensions = new ArrayList<Extension>();
+        for (Object extensionProvider : extensionProviders) {
+            if (!(extensionProvider instanceof JCFieldAccess)) continue;
+            JCFieldAccess provider = (JCFieldAccess) extensionProvider;
+            if (!("class".equals(provider.name.toString()))) continue;
+            Type providerType = CLASS.resolveMember(typeNode, provider.selected);
+            if (providerType == null) continue;
+            if ((providerType.tsym.flags() & (INTERFACE | ANNOTATION)) != 0) continue;
+
+            extensions.add(getExtension(typeNode, (ClassType) providerType));
+        }
+        return extensions;
+    }
+
+    public Extension getExtension(final JavacNode typeNode, final ClassType extensionMethodProviderType) {
+        List<MethodSymbol> extensionMethods = new ArrayList<MethodSymbol>();
+        TypeSymbol tsym = extensionMethodProviderType.asElement();
+        if (tsym != null) for (Symbol member : tsym.getEnclosedElements()) {
+            if (member.getKind() != ElementKind.METHOD) continue;
+            MethodSymbol method = (MethodSymbol) member;
+            if ((method.flags() & STATIC) == 0) continue;
+            if ((method.flags() & PUBLIC) == 0) continue;
+            if (method.params().isEmpty()) continue;
+            extensionMethods.add(method);
+        }
+        return new Extension(extensionMethods, tsym);
+    }
+
+    private static class Extension {
+        final List<MethodSymbol> extensionMethods;
+        final TypeSymbol extensionProvider;
+
+        public Extension(List<MethodSymbol> extensionMethods, TypeSymbol extensionProvider) {
+            this.extensionMethods = extensionMethods;
+            this.extensionProvider = extensionProvider;
+        }
+    }
+
+    private static class ExtensionMethodReplaceVisitor extends TreeScanner<Void, Void> {
+        final JavacNode annotationNode;
+        final List<Extension> extensions;
+        final boolean suppressBaseMethods;
+
+        public ExtensionMethodReplaceVisitor(JavacNode annotationNode, List<Extension> extensions, boolean suppressBaseMethods) {
+            this.annotationNode = annotationNode;
+            this.extensions = extensions;
+            this.suppressBaseMethods = suppressBaseMethods;
+        }
+
+        public void replace() {
+            annotationNode.up().get().accept(this, null);
+        }
+
+        @Override
+        public Void visitMethodInvocation(final MethodInvocationTree tree, final Void p) {
+            super.visitMethodInvocation(tree, p);
+            handleMethodCall((JCMethodInvocation) tree);
+            return null;
+        }
+
+        private void handleMethodCall(final JCMethodInvocation methodCall) {
+            JavacNode methodCallNode = annotationNode.getAst().get(methodCall);
+
+            if (methodCallNode == null) {
+                // This should mean the node does not exist in the source at all. This is the case for generated nodes, such as implicit super() calls.
+                return;
+            }
+
+            JavacNode surroundingType = upToTypeNode(methodCallNode);
+
+            TypeSymbol surroundingTypeSymbol = ((JCClassDecl) surroundingType.get()).sym;
+            JCExpression receiver = receiverOf(methodCall);
+            String methodName = methodNameOf(methodCall);
+
+            if ("this".equals(receiver.toString()) || "this".equals(methodName) || "super".equals(methodName)) return;
+            Map<JCTree, JCTree> resolution = new JavacResolution(methodCallNode.getContext()).resolveMethodMember(methodCallNode);
+
+            JCTree resolvedMethodCall = resolution.get(methodCall);
+            if (resolvedMethodCall == null || resolvedMethodCall.type == null) return;
+            if (!suppressBaseMethods && !(resolvedMethodCall.type instanceof ErrorType)) return;
+
+            JCTree resolvedReceiver = resolution.get(receiver);
+            if (resolvedReceiver == null || resolvedReceiver.type == null) return;
+            Type receiverType = resolvedReceiver.type;
+
+            // Skip static method access
+            Symbol sym = null;
+            if (resolvedReceiver instanceof JCIdent) {
+                sym = ((JCIdent) resolvedReceiver).sym;
+            } else if (resolvedReceiver instanceof JCFieldAccess) {
+                sym = ((JCFieldAccess) resolvedReceiver).sym;
+            }
+            if (sym instanceof ClassSymbol) return;
+
+            Types types = Types.instance(annotationNode.getContext());
+            for (Extension extension : extensions) {
+                TypeSymbol extensionProvider = extension.extensionProvider;
+                if (surroundingTypeSymbol == extensionProvider) continue;
+                for (MethodSymbol extensionMethod : extension.extensionMethods) {
+                    if (!methodName.equals(extensionMethod.name.toString())) continue;
+                    Type extensionMethodType = extensionMethod.type;
+                    if (!MethodType.class.isInstance(extensionMethodType) && !ForAll.class.isInstance(extensionMethodType))
+                        continue;
+                    Type firstArgType = types.erasure(extensionMethodType.asMethodType().argtypes.get(0));
+                    if (!types.isAssignable(receiverType, firstArgType)) continue;
+                    methodCall.args = methodCall.args.prepend(receiver);
+                    methodCall.meth = chainDotsString(annotationNode, extensionProvider.toString() + "." + methodName);
+                    recursiveSetGeneratedBy(methodCall.meth, methodCallNode);
+                    return;
+                }
+            }
+        }
+
+        private String methodNameOf(final JCMethodInvocation methodCall) {
+            if (methodCall.meth instanceof JCIdent) {
+                return ((JCIdent) methodCall.meth).name.toString();
+            } else {
+                return ((JCFieldAccess) methodCall.meth).name.toString();
+            }
+        }
+
+        private JCExpression receiverOf(final JCMethodInvocation methodCall) {
+            if (methodCall.meth instanceof JCIdent) {
+                return annotationNode.getTreeMaker().Ident(annotationNode.toName("this"));
+            } else {
+                return ((JCFieldAccess) methodCall.meth).selected;
+            }
+        }
+    }
 }

@@ -12,7 +12,7 @@ class JavadocMultiline {
      * This is a list of booleans.
      *
      * @return A list of booleans to set for this object. This is a Javadoc return that is long
-     *         enough to wrap to multiple lines.
+     * enough to wrap to multiple lines.
      */
     @java.lang.SuppressWarnings("all")
     public java.util.List<Boolean> getBooleans() {
@@ -31,7 +31,7 @@ class JavadocMultiline {
      * This is a list of booleans.
      *
      * @param booleans A list of booleans to set for this object. This is a Javadoc param that is
-     *        long enough to wrap to multiple lines.
+     *                 long enough to wrap to multiple lines.
      */
     @java.lang.SuppressWarnings("all")
     public void setBooleans(final java.util.List<Boolean> booleans) {
@@ -42,7 +42,7 @@ class JavadocMultiline {
      * This is a list of booleans.
      *
      * @param booleans A list of booleans to set for this object. This is a Javadoc param that is
-     *        long enough to wrap to multiple lines.
+     *                 long enough to wrap to multiple lines.
      */
     @java.lang.SuppressWarnings("all")
     public void setBooleans2(final java.util.List<Boolean> booleans2) {

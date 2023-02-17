@@ -10,9 +10,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class A {
-	private String string;
-	
-	public String test() {
-		return getString();
-	}
+    private String string;
+
+    public String test() {
+        return getString();
+    }
 }

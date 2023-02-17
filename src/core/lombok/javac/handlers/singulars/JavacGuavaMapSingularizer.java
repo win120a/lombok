@@ -1,16 +1,16 @@
 /*
  * Copyright (C) 2015-2021 The Project Lombok Authors.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -27,31 +27,35 @@ import lombok.spi.Provides;
 
 @Provides(JavacSingularizer.class)
 public class JavacGuavaMapSingularizer extends JavacGuavaSingularizer {
-	// TODO cgcc.ImmutableMultimap, cgcc.ImmutableListMultimap, cgcc.ImmutableSetMultimap
-	// TODO cgcc.ImmutableClassToInstanceMap
-	// TODO cgcc.ImmutableRangeMap
-	
-	private static final LombokImmutableList<String> SUFFIXES =
-		LombokImmutableList.of("key", "value");
-	private static final LombokImmutableList<String> SUPPORTED_TYPES = LombokImmutableList.of(
-		"com.google.common.collect.ImmutableMap", 
-		"com.google.common.collect.ImmutableBiMap", 
-		"com.google.common.collect.ImmutableSortedMap"
-	);
-	
-	@Override public LombokImmutableList<String> getSupportedTypes() {
-		return SUPPORTED_TYPES;
-	}
-	
-	@Override protected LombokImmutableList<String> getArgumentSuffixes() {
-		return SUFFIXES;
-	}
-	
-	@Override protected String getAddMethodName() {
-		return "put";
-	}
-	
-	@Override protected String getAddAllTypeName() {
-		return "java.util.Map";
-	}
+    // TODO cgcc.ImmutableMultimap, cgcc.ImmutableListMultimap, cgcc.ImmutableSetMultimap
+    // TODO cgcc.ImmutableClassToInstanceMap
+    // TODO cgcc.ImmutableRangeMap
+
+    private static final LombokImmutableList<String> SUFFIXES =
+            LombokImmutableList.of("key", "value");
+    private static final LombokImmutableList<String> SUPPORTED_TYPES = LombokImmutableList.of(
+            "com.google.common.collect.ImmutableMap",
+            "com.google.common.collect.ImmutableBiMap",
+            "com.google.common.collect.ImmutableSortedMap"
+    );
+
+    @Override
+    public LombokImmutableList<String> getSupportedTypes() {
+        return SUPPORTED_TYPES;
+    }
+
+    @Override
+    protected LombokImmutableList<String> getArgumentSuffixes() {
+        return SUFFIXES;
+    }
+
+    @Override
+    protected String getAddMethodName() {
+        return "put";
+    }
+
+    @Override
+    protected String getAddAllTypeName() {
+        return "java.util.Map";
+    }
 }

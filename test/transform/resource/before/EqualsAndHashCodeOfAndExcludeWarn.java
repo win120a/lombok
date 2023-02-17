@@ -1,10 +1,10 @@
 // skip-compare-contents
-@lombok.EqualsAndHashCode(of={"y"})
+@lombok.EqualsAndHashCode(of = {"y"})
 final class EqualsAndHashCodeWarnOf {
-	int x;
+    int x;
 }
 
-@lombok.EqualsAndHashCode(exclude={"y"})
+@lombok.EqualsAndHashCode(exclude = {"y"})
 final class EqualsAndHashCodeWarnExclude {
-	int x;
+    int x;
 }

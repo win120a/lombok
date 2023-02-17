@@ -3,4 +3,5 @@
  */
 package com.sun.tools.javac.file;
 
-public class JavacFileManager {}
+public class JavacFileManager {
+}

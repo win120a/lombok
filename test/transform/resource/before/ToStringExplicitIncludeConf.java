@@ -2,6 +2,7 @@
 
 @lombok.ToString
 class ToStringExplicitIncludeConf {
-	int x;
-	@lombok.ToString.Include int y;
+    int x;
+    @lombok.ToString.Include
+    int y;
 }

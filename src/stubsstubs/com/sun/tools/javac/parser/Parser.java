@@ -1,5 +1,6 @@
 package com.sun.tools.javac.parser;
 
 public class Parser {
-	public static class Factory {}
+    public static class Factory {
+    }
 }

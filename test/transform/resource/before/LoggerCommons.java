@@ -8,11 +8,11 @@ class LoggerCommons {
 class LoggerCommonsWithImport {
 }
 
-@CommonsLog(topic="DifferentName")
+@CommonsLog(topic = "DifferentName")
 class LoggerCommonsWithDifferentName {
 }
 
-@CommonsLog(topic=LoggerCommonsWithStaticField.TOPIC)
+@CommonsLog(topic = LoggerCommonsWithStaticField.TOPIC)
 class LoggerCommonsWithStaticField {
-	static final String TOPIC = "StaticField";
+    static final String TOPIC = "StaticField";
 }

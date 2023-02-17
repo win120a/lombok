@@ -1,3 +1,3 @@
 class WithWithDollar {
-	int $i;
+    int $i;
 }

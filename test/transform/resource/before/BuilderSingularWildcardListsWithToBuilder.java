@@ -5,6 +5,8 @@ import lombok.Singular;
 
 @lombok.Builder(toBuilder = true)
 class BuilderSingularWildcardListsWithToBuilder {
-	@Singular private List<?> objects;
-	@Singular private Collection<? extends Number> numbers;
+    @Singular
+    private List<?> objects;
+    @Singular
+    private Collection<? extends Number> numbers;
 }

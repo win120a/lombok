@@ -8,9 +8,15 @@ import lombok.Singular;
 
 @lombok.Builder
 class BuilderSingularGuavaListsSets<T> {
-	@Singular private ImmutableList<T> cards;
-	@Singular private ImmutableCollection<? extends Number> frogs;
-	@SuppressWarnings("all") @Singular("rawSet") private ImmutableSet rawSet;
-	@Singular private ImmutableSortedSet<String> passes;
-	@Singular private ImmutableTable<? extends Number, ? extends Number, String> users;
+    @Singular
+    private ImmutableList<T> cards;
+    @Singular
+    private ImmutableCollection<? extends Number> frogs;
+    @SuppressWarnings("all")
+    @Singular("rawSet")
+    private ImmutableSet rawSet;
+    @Singular
+    private ImmutableSortedSet<String> passes;
+    @Singular
+    private ImmutableTable<? extends Number, ? extends Number, String> users;
 }

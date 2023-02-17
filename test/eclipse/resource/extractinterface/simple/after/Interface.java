@@ -2,20 +2,20 @@ package pkg;
 
 public interface Interface {
 
-	boolean equals(java.lang.Object o);
+    boolean equals(java.lang.Object o);
 
-	boolean canEqual(java.lang.Object other);
+    boolean canEqual(java.lang.Object other);
 
-	int hashCode();
+    int hashCode();
 
-	String getString();
+    String getString();
 
-	int getInteger();
+    int getInteger();
 
-	void setString(String string);
+    void setString(String string);
 
-	void setInteger(int integer);
+    void setInteger(int integer);
 
-	java.lang.String toString();
+    java.lang.String toString();
 
 }

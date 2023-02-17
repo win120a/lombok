@@ -1,7 +1,7 @@
 package pkg;
 
 public class B {
-	public String test() {
-		return new A().getNewString();
-	}
+    public String test() {
+        return new A().getNewString();
+    }
 }

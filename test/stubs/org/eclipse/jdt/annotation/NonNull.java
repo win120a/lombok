@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.TYPE_USE)
-public @interface NonNull {}
+public @interface NonNull {
+}

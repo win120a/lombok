@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface NonNull {}
+public @interface NonNull {
+}

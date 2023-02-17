@@ -1,5 +1,5 @@
-@lombok.Getter(onMethod=@__(@Deprecated))
+@lombok.Getter(onMethod = @__(@Deprecated))
 class GetterOnMethodOnType {
-	private int test;
-	private String name;
+    private int test;
+    private String name;
 }

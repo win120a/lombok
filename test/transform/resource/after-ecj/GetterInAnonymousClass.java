@@ -1,20 +1,26 @@
 import lombok.Getter;
+
 public class GetterInAnonymousClass {
-  Object annonymous = new Object() {
-    @Getter class Inner {
-      private String string;
-      Inner() {
+    Object annonymous = new Object() {
+        @Getter
+        class Inner {
+            private String string;
+
+            Inner() {
+                super();
+            }
+
+            public @java.lang.SuppressWarnings("all") String getString() {
+                return this.string;
+            }
+        }
+
+        x() {
+            super();
+        }
+    };
+
+    public GetterInAnonymousClass() {
         super();
-      }
-      public @java.lang.SuppressWarnings("all") String getString() {
-        return this.string;
-      }
     }
-    x() {
-      super();
-    }
-  };
-  public GetterInAnonymousClass() {
-    super();
-  }
 }

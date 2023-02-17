@@ -8,5 +8,5 @@ import java.lang.annotation.Target;
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JsonAnySetter {
-	boolean enabled() default true;
+    boolean enabled() default true;
 }

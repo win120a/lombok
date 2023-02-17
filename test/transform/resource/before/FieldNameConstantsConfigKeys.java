@@ -2,5 +2,5 @@
 
 @lombok.experimental.FieldNameConstants
 public class FieldNameConstantsConfigKeys {
-	String iAmADvdPlayer;
+    String iAmADvdPlayer;
 }

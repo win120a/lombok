@@ -3,6 +3,7 @@ import lombok.Getter;
 
 @Getter
 class GetterNone {
-	int i;
-	@Getter(AccessLevel.NONE) int foo;
+    int i;
+    @Getter(AccessLevel.NONE)
+    int foo;
 }

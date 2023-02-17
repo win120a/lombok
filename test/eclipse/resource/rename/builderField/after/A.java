@@ -4,5 +4,5 @@ import lombok.Builder;
 
 @Builder
 public class A {
-	private String newString;
+    private String newString;
 }

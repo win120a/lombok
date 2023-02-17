@@ -1,3 +1,3 @@
 module foo {
-	requires static lombok;
+    requires static lombok;
 }

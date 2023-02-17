@@ -9,4 +9,5 @@ import java.lang.annotation.Target;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
-public @interface Pure {}
+public @interface Pure {
+}

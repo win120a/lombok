@@ -1,4 +1,5 @@
-@lombok.Data class DataIgnore {
-	final int x;
-	String $name;
+@lombok.Data
+class DataIgnore {
+    final int x;
+    String $name;
 }

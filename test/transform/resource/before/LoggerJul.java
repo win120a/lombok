@@ -8,23 +8,23 @@ class LoggerJul {
 class LoggerJulWithImport {
 }
 
-@Log(topic="DifferentName")
+@Log(topic = "DifferentName")
 class LoggerJulWithDifferentName {
 }
 
-@Log(topic=LoggerJulWithStaticField.TOPIC)
+@Log(topic = LoggerJulWithStaticField.TOPIC)
 class LoggerJulWithStaticField {
-	static final String TOPIC = "StaticField";
+    static final String TOPIC = "StaticField";
 }
 
 @Log
 enum LoggerJulWithEnum {
-	CONSTANT;
+    CONSTANT;
 }
 
 class LoggerJulWithInnerEnum {
-	@Log
-	enum Inner {
-		CONSTANT;
-	}
+    @Log
+    enum Inner {
+        CONSTANT;
+    }
 }

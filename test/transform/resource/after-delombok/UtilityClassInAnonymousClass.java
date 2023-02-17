@@ -1,8 +1,8 @@
 public class UtilityClassInAnonymousClass {
-	Object annonymous = new Object() {
+    Object annonymous = new Object() {
 
-		class Inner {
-			private String string;
-		}
-	};
+        class Inner {
+            private String string;
+        }
+    };
 }

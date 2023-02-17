@@ -5,7 +5,7 @@ package com.sun.tools.javac.main;
 
 
 public enum Option {
-	;
-	public String text;
-	public String primaryName;
+    ;
+    public String text;
+    public String primaryName;
 }

@@ -1,6 +1,6 @@
 
 public class VarNullInit {
-	void method() {
-		java.lang.Object x = null;
-	}
+    void method() {
+        java.lang.Object x = null;
+    }
 }

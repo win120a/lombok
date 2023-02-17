@@ -6,16 +6,16 @@ package com.sun.tools.javac.parser;
 import com.sun.tools.javac.util.Context;
 
 public class Parser {
-	public static class Factory {
-		public static Context.Key<Parser.Factory> parserFactoryKey;
-		
-		public Factory(Context context) {
-			
-		}
-		
-		public Parser newParser(Lexer S, boolean keepDocComments, boolean genEndPos) {
-			return null;
-		}
-		
-	}
+    public static class Factory {
+        public static Context.Key<Parser.Factory> parserFactoryKey;
+
+        public Factory(Context context) {
+
+        }
+
+        public Parser newParser(Lexer S, boolean keepDocComments, boolean genEndPos) {
+            return null;
+        }
+
+    }
 }

@@ -1,16 +1,16 @@
 /*
  * Copyright (C) 2010-2017 The Project Lombok Authors.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -37,16 +37,17 @@ import java.lang.annotation.Target;
  * public class LogExample {
  * }
  * </pre>
- * 
+ * <p>
  * will generate:
- * 
+ *
  * <pre>
  * public class LogExample {
  *     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogExample.class);
  * }
  * </pre>
- * 
+ * <p>
  * This annotation is valid for classes and enumerations.<br>
+ *
  * @see <a href="https://www.slf4j.org/api/org/slf4j/Logger.html">org.slf4j.Logger</a>
  * @see <a href="https://www.slf4j.org/api/org/slf4j/LoggerFactory.html#getLogger(java.lang.Class)">org.slf4j.LoggerFactory#getLogger(java.lang.Class)</a>
  * @see lombok.extern.apachecommons.CommonsLog &#64;CommonsLog
@@ -61,7 +62,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.SOURCE)
 @Target(ElementType.TYPE)
 public @interface Slf4j {
-	/** @return The category of the constructed Logger. By default, it will use the type where the annotation is placed. */
-	String topic() default "";
+    /**
+     * @return The category of the constructed Logger. By default, it will use the type where the annotation is placed.
+     */
+    String topic() default "";
 }
 

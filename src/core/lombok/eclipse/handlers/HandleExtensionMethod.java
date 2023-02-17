@@ -1,16 +1,16 @@
 /*
  * Copyright (C) 2012-2021 The Project Lombok Authors.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -41,26 +41,27 @@ import lombok.spi.Provides;
 @Provides
 @HandlerPriority(66560) // 2^16 + 2^10; we must run AFTER HandleVal which is at 2^16
 public class HandleExtensionMethod extends EclipseAnnotationHandler<ExtensionMethod> {
-	@Override public void handle(AnnotationValues<ExtensionMethod> annotation, Annotation ast, EclipseNode annotationNode) {
-		handleExperimentalFlagUsage(annotationNode, ConfigurationKeys.EXTENSION_METHOD_FLAG_USAGE, "@ExtensionMethod");
-		
-		TypeDeclaration typeDecl = null;
-		EclipseNode owner = annotationNode.up();
-		if (owner.get() instanceof TypeDeclaration) typeDecl = (TypeDeclaration) owner.get();
-		int modifiers = typeDecl == null ? 0 : typeDecl.modifiers;
-		
-		boolean notAClass = (modifiers &
-				(ClassFileConstants.AccAnnotation)) != 0;
-		
-		if (typeDecl == null || notAClass) {
-			annotationNode.addError("@ExtensionMethod is legal only on classes and enums and interfaces.");
-			return;
-		}
-		
-		List<Object> listenerInterfaces = annotation.getActualExpressions("value");
-		if (listenerInterfaces.isEmpty()) {
-			annotationNode.addWarning(String.format("@ExtensionMethod has no effect since no extension types were specified."));
-			return;
-		}
-	}
+    @Override
+    public void handle(AnnotationValues<ExtensionMethod> annotation, Annotation ast, EclipseNode annotationNode) {
+        handleExperimentalFlagUsage(annotationNode, ConfigurationKeys.EXTENSION_METHOD_FLAG_USAGE, "@ExtensionMethod");
+
+        TypeDeclaration typeDecl = null;
+        EclipseNode owner = annotationNode.up();
+        if (owner.get() instanceof TypeDeclaration) typeDecl = (TypeDeclaration) owner.get();
+        int modifiers = typeDecl == null ? 0 : typeDecl.modifiers;
+
+        boolean notAClass = (modifiers &
+                (ClassFileConstants.AccAnnotation)) != 0;
+
+        if (typeDecl == null || notAClass) {
+            annotationNode.addError("@ExtensionMethod is legal only on classes and enums and interfaces.");
+            return;
+        }
+
+        List<Object> listenerInterfaces = annotation.getActualExpressions("value");
+        if (listenerInterfaces.isEmpty()) {
+            annotationNode.addWarning(String.format("@ExtensionMethod has no effect since no extension types were specified."));
+            return;
+        }
+    }
 }

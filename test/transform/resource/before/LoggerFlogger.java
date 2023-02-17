@@ -9,20 +9,20 @@ class LoggerFloggerWithImport {
 }
 
 class LoggerFloggerOuter {
-	@lombok.extern.flogger.Flogger
-	static class Inner {
-		
-	}
+    @lombok.extern.flogger.Flogger
+    static class Inner {
+
+    }
 }
 
 @Flogger
 enum LoggerFloggerWithEnum {
-	CONSTANT;
+    CONSTANT;
 }
 
 class LoggerFloggerWithInnerEnum {
-	@Flogger
-	enum Inner {
-		CONSTANT;
-	}
+    @Flogger
+    enum Inner {
+        CONSTANT;
+    }
 }

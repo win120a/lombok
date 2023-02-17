@@ -1,4 +1,5 @@
 class UtilityClassInner {
-	@lombok.experimental.UtilityClass
-	class UtilClass {}
+    @lombok.experimental.UtilityClass
+    class UtilClass {
+    }
 }

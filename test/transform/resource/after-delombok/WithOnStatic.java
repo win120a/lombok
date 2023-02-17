@@ -1,4 +1,4 @@
 class WithOnStatic {
-	static boolean foo;
-	static int bar;
+    static boolean foo;
+    static int bar;
 }

@@ -6,5 +6,6 @@ package com.sun.tools.javac.file;
 import javax.tools.JavaFileObject;
 
 public abstract class BaseFileObject implements JavaFileObject {
-	protected BaseFileObject(JavacFileManager fileManager) {}
+    protected BaseFileObject(JavacFileManager fileManager) {
+    }
 }

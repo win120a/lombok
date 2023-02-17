@@ -1,7 +1,9 @@
 class SimpleTypeResolutionFail {
-	@Getter private int x;
+    @Getter
+    private int x;
 }
 
 class SimpleTypeResolutionSuccess {
-	@lombok.Getter private int x;
+    @lombok.Getter
+    private int x;
 }

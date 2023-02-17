@@ -10,5 +10,5 @@ import lombok.ToString;
 @Setter
 @ToString
 public class A {
-	private String newString;
+    private String newString;
 }

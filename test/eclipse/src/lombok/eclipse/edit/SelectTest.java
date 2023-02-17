@@ -16,33 +16,33 @@ import lombok.eclipse.SetupSingleFileTest;
 
 @RunWith(EclipseRunner.class)
 public class SelectTest {
-	
-	@Rule
-	public SetupSingleFileTest setup = new SetupSingleFileTest();
-	
-	@Test
-	public void builderField() throws Exception {
-		ICompilationUnit cu = setup.getPackageFragment().getCompilationUnit("A.java");
-		IType type = cu.findPrimaryType();
-		IField field = type.getField("id");
-		
-		ISourceRange sourceRange = field.getNameRange();
-		IJavaElement[] codeSelect = cu.codeSelect(sourceRange.getOffset(), sourceRange.getLength());
-		
-		assertEquals(1, codeSelect.length);
-		assertEquals(field, codeSelect[0]);
-	}
-	
-	@Test
-	public void superbuilderField() throws Exception {
-		ICompilationUnit cu = setup.getPackageFragment().getCompilationUnit("A.java");
-		IType type = cu.findPrimaryType();
-		IField field = type.getField("id");
-		
-		ISourceRange sourceRange = field.getNameRange();
-		IJavaElement[] codeSelect = cu.codeSelect(sourceRange.getOffset(), sourceRange.getLength());
-		
-		assertEquals(1, codeSelect.length);
-		assertEquals(field, codeSelect[0]);
-	}
+
+    @Rule
+    public SetupSingleFileTest setup = new SetupSingleFileTest();
+
+    @Test
+    public void builderField() throws Exception {
+        ICompilationUnit cu = setup.getPackageFragment().getCompilationUnit("A.java");
+        IType type = cu.findPrimaryType();
+        IField field = type.getField("id");
+
+        ISourceRange sourceRange = field.getNameRange();
+        IJavaElement[] codeSelect = cu.codeSelect(sourceRange.getOffset(), sourceRange.getLength());
+
+        assertEquals(1, codeSelect.length);
+        assertEquals(field, codeSelect[0]);
+    }
+
+    @Test
+    public void superbuilderField() throws Exception {
+        ICompilationUnit cu = setup.getPackageFragment().getCompilationUnit("A.java");
+        IType type = cu.findPrimaryType();
+        IField field = type.getField("id");
+
+        ISourceRange sourceRange = field.getNameRange();
+        IJavaElement[] codeSelect = cu.codeSelect(sourceRange.getOffset(), sourceRange.getLength());
+
+        assertEquals(1, codeSelect.length);
+        assertEquals(field, codeSelect[0]);
+    }
 }

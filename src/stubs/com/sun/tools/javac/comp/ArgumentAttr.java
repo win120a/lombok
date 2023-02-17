@@ -8,5 +8,7 @@ import com.sun.tools.javac.util.Context;
 
 // JDK9+
 public class ArgumentAttr extends JCTree.Visitor {
-	public static ArgumentAttr instance(Context context) { return null; }
+    public static ArgumentAttr instance(Context context) {
+        return null;
+    }
 }

@@ -5,4 +5,5 @@ package com.sun.tools.javac.util;
 
 import javax.tools.JavaFileObject;
 
-public abstract class BaseFileObject implements JavaFileObject {}
+public abstract class BaseFileObject implements JavaFileObject {
+}

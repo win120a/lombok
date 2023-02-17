@@ -8,5 +8,5 @@ import java.lang.annotation.Target;
 @Target({ElementType.ANNOTATION_TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JsonProperty {
-	String value();
+    String value();
 }

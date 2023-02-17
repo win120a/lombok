@@ -1,3 +1,4 @@
 package com.sun.tools.javac.main;
 
-public class Option {}
+public class Option {
+}

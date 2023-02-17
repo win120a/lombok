@@ -15,33 +15,33 @@ import lombok.eclipse.SetupBeforeAfterTest;
 
 @RunWith(EclipseRunner.class)
 public class ExtractInterfaceTest {
-	
-	@Rule
-	public SetupBeforeAfterTest setup = new SetupBeforeAfterTest();
-	
-	@Test
-	public void simple() throws Exception {
-		ICompilationUnit cu = setup.getPackageFragment().getCompilationUnit("A.java");
-		IType type = cu.findPrimaryType();
-		
-		ExtractInterfaceProcessor extractInterfaceProcessor = new ExtractInterfaceProcessor(type, JavaPreferencesSettings.getCodeGenerationSettings(setup.getJavaProject()));
-		extractInterfaceProcessor.setExtractedMembers(type.getMethods());
-		extractInterfaceProcessor.setTypeName("Interface");
-		
-		performRefactoring(extractInterfaceProcessor);
-	}
-	
-	@Test
-	public void usage() throws Exception {
-		ICompilationUnit cu = setup.getPackageFragment().getCompilationUnit("A.java");
-		IType type = cu.findPrimaryType();
-		
-		ExtractInterfaceProcessor extractInterfaceProcessor = new ExtractInterfaceProcessor(type, JavaPreferencesSettings.getCodeGenerationSettings(setup.getJavaProject()));
-		extractInterfaceProcessor.setExtractedMembers(type.getMethods());
-		extractInterfaceProcessor.setTypeName("Interface");
-		extractInterfaceProcessor.setReplace(true);
-		
-		performRefactoring(extractInterfaceProcessor);
-	}
-	
+
+    @Rule
+    public SetupBeforeAfterTest setup = new SetupBeforeAfterTest();
+
+    @Test
+    public void simple() throws Exception {
+        ICompilationUnit cu = setup.getPackageFragment().getCompilationUnit("A.java");
+        IType type = cu.findPrimaryType();
+
+        ExtractInterfaceProcessor extractInterfaceProcessor = new ExtractInterfaceProcessor(type, JavaPreferencesSettings.getCodeGenerationSettings(setup.getJavaProject()));
+        extractInterfaceProcessor.setExtractedMembers(type.getMethods());
+        extractInterfaceProcessor.setTypeName("Interface");
+
+        performRefactoring(extractInterfaceProcessor);
+    }
+
+    @Test
+    public void usage() throws Exception {
+        ICompilationUnit cu = setup.getPackageFragment().getCompilationUnit("A.java");
+        IType type = cu.findPrimaryType();
+
+        ExtractInterfaceProcessor extractInterfaceProcessor = new ExtractInterfaceProcessor(type, JavaPreferencesSettings.getCodeGenerationSettings(setup.getJavaProject()));
+        extractInterfaceProcessor.setExtractedMembers(type.getMethods());
+        extractInterfaceProcessor.setTypeName("Interface");
+        extractInterfaceProcessor.setReplace(true);
+
+        performRefactoring(extractInterfaceProcessor);
+    }
+
 }

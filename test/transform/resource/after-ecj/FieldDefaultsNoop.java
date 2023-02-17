@@ -1,5 +1,6 @@
-@lombok.experimental.FieldDefaults class FieldDefaultsNoop {
-  FieldDefaultsNoop() {
-    super();
-  }
+@lombok.experimental.FieldDefaults
+class FieldDefaultsNoop {
+    FieldDefaultsNoop() {
+        super();
+    }
 }

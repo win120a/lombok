@@ -4,5 +4,6 @@
 @lombok.ToString
 @lombok.AllArgsConstructor
 public class NullLibrary2 {
-	@lombok.With String foo;
+    @lombok.With
+    String foo;
 }

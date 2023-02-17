@@ -1,3 +1,4 @@
 abstract class WithMethodAbstract {
-	@lombok.With String foo;
+    @lombok.With
+    String foo;
 }

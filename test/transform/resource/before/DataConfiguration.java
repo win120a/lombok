@@ -4,5 +4,5 @@
 //CONF: lombok.noArgsConstructor.extraPrivate = true
 @lombok.Data
 class DataConfiguration {
-	final int x;
+    final int x;
 }

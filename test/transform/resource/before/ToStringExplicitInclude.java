@@ -1,4 +1,4 @@
 @lombok.ToString(onlyExplicitlyIncluded = true)
 class ToStringExplicitInclude {
-	int x;
+    int x;
 }

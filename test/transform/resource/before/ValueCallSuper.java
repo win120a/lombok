@@ -2,6 +2,7 @@
 
 class ValueParent {
 }
+
 @lombok.Value
 class ValueCallSuper extends ValueParent {
 }

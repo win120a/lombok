@@ -1,4 +1,4 @@
 module projA {
-	requires static lombok;
-	exports pkgA;
+    requires static lombok;
+    exports pkgA;
 }

@@ -9,29 +9,29 @@ class LoggerJBossLogWithImport {
 }
 
 class LoggerJBossLogOuter {
-	@lombok.extern.jbosslog.JBossLog
-	static class Inner {
-		
-	}
+    @lombok.extern.jbosslog.JBossLog
+    static class Inner {
+
+    }
 }
 
 @JBossLog
 enum LoggerJBossLogWithEnum {
-	CONSTANT;
+    CONSTANT;
 }
 
 class LoggerJBossLogWithInnerEnum {
-	@JBossLog
-	enum Inner {
-		CONSTANT;
-	}
+    @JBossLog
+    enum Inner {
+        CONSTANT;
+    }
 }
 
-@JBossLog(topic="DifferentLogger")
+@JBossLog(topic = "DifferentLogger")
 class LoggerJBossLogWithDifferentLoggerName {
 }
 
-@JBossLog(topic=LoggerJBossLogWithStaticField.TOPIC)
+@JBossLog(topic = LoggerJBossLogWithStaticField.TOPIC)
 class LoggerJBossLogWithStaticField {
-	static final String TOPIC = "StaticField";
+    static final String TOPIC = "StaticField";
 }

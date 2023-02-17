@@ -1,16 +1,16 @@
 /*
  * Copyright (C) 2010-2021 The Project Lombok Authors.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -29,21 +29,22 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.commons.JSRInlinerAdapter;
 
 class AsmUtil {
-	private AsmUtil() {
-		throw new UnsupportedOperationException();
-	}
-	
-	static byte[] fixJSRInlining(byte[] byteCode) {
-		ClassReader reader = new ClassReader(byteCode);
-		ClassWriter writer = new FixedClassWriter(reader, 0);
-		
-		ClassVisitor visitor = new ClassVisitor(Opcodes.ASM9, writer) {
-			@Override public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
-				return new JSRInlinerAdapter(super.visitMethod(access, name, desc, signature, exceptions), access, name, desc, signature, exceptions);
-			}
-		};
-		
-		reader.accept(visitor, 0);
-		return writer.toByteArray();
-	}
+    private AsmUtil() {
+        throw new UnsupportedOperationException();
+    }
+
+    static byte[] fixJSRInlining(byte[] byteCode) {
+        ClassReader reader = new ClassReader(byteCode);
+        ClassWriter writer = new FixedClassWriter(reader, 0);
+
+        ClassVisitor visitor = new ClassVisitor(Opcodes.ASM9, writer) {
+            @Override
+            public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+                return new JSRInlinerAdapter(super.visitMethod(access, name, desc, signature, exceptions), access, name, desc, signature, exceptions);
+            }
+        };
+
+        reader.accept(visitor, 0);
+        return writer.toByteArray();
+    }
 }

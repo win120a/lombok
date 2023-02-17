@@ -7,6 +7,7 @@ import lombok.Builder;
 @AllArgsConstructor
 @SuperBuilder
 class ConstructorsWithSuperBuilderDefaults {
-	@Builder.Default int x = 5;
-	int y;
+    @Builder.Default
+    int x = 5;
+    int y;
 }

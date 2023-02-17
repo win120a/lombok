@@ -1,48 +1,50 @@
 //CONF: lombok.addGeneratedAnnotation = false
+
 import lombok.*;
+
 import static lombok.AccessLevel.NONE;
 
 @Data
 @Getter(NONE)
 @Setter(NONE)
 class EqualsAndHashCodeWithSomeExistingMethods {
-	int x;
-	
-	public int hashCode() {
-		return 42;
-	}
+    int x;
+
+    public int hashCode() {
+        return 42;
+    }
 }
 
 @Data
 @Getter(NONE)
 @Setter(NONE)
 class EqualsAndHashCodeWithSomeExistingMethods2 {
-	int x;
-	
-	protected boolean canEqual(Object other) {
-		return false;
-	}
+    int x;
+
+    protected boolean canEqual(Object other) {
+        return false;
+    }
 }
 
 @Data
 @Getter(NONE)
 @Setter(NONE)
 class EqualsAndHashCodeWithAllExistingMethods {
-	int x;
-	
-	public int hashCode() {
-		return 42;
-	}
-	
-	public boolean equals(Object other) {
-		return false;
-	}
+    int x;
+
+    public int hashCode() {
+        return 42;
+    }
+
+    public boolean equals(Object other) {
+        return false;
+    }
 }
 
 @Data
 @Getter(AccessLevel.NONE)
 @Setter(lombok.AccessLevel.NONE)
 class EqualsAndHashCodeWithNoExistingMethods {
-	int x;
+    int x;
 }
 

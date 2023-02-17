@@ -10,6 +10,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class A implements Interface {
-	private String string;
-	private int integer;
+    private String string;
+    private int integer;
 }

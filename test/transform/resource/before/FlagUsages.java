@@ -3,10 +3,11 @@
 //CONF: lombok.experimental.flagUsage = ERROR
 @lombok.experimental.FieldNameConstants
 public class FlagUsages {
-	@lombok.Getter String x;
+    @lombok.Getter
+    String x;
 
-	String z;
+    String z;
 
-	public FlagUsages(String x, String y) {
-	}
+    public FlagUsages(String x, String y) {
+    }
 }

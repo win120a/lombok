@@ -3,7 +3,7 @@
 import lombok.NonNull;
 
 record NonNullOnRecord2(@NonNull String a) {
-	public NonNullOnRecord2 {
-		System.out.println("Hello");
-	}
+    public NonNullOnRecord2 {
+        System.out.println("Hello");
+    }
 }

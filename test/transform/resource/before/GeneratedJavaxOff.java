@@ -1,5 +1,5 @@
 //CONF: lombok.addJavaxGeneratedAnnotation = false
 class GeneratedJavaxOff {
-	@lombok.Getter
-	int x;
+    @lombok.Getter
+    int x;
 }

@@ -1,16 +1,16 @@
 /*
  * Copyright (C) 2012-2022 The Project Lombok Authors.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -37,13 +37,15 @@ import lombok.spi.Provides;
 @Provides
 @HandlerPriority(65536)
 public class HandleAccessors extends JavacAnnotationHandler<Accessors> {
-	@Override public void handle(AnnotationValues<Accessors> annotation, JCAnnotation ast, JavacNode annotationNode) {
-		// Accessors itself is handled by HandleGetter/Setter; this is just to ensure that the annotation is removed
-		// from the AST when delomboking.
-		
-		handleExperimentalFlagUsage(annotationNode, ConfigurationKeys.ACCESSORS_FLAG_USAGE, "@Accessors");
-		
-		deleteAnnotationIfNeccessary(annotationNode, Accessors.class);
-		if (annotation.isMarking()) annotationNode.addWarning("Accessors on its own does nothing. Set at least one parameter");
-	}
+    @Override
+    public void handle(AnnotationValues<Accessors> annotation, JCAnnotation ast, JavacNode annotationNode) {
+        // Accessors itself is handled by HandleGetter/Setter; this is just to ensure that the annotation is removed
+        // from the AST when delomboking.
+
+        handleExperimentalFlagUsage(annotationNode, ConfigurationKeys.ACCESSORS_FLAG_USAGE, "@Accessors");
+
+        deleteAnnotationIfNeccessary(annotationNode, Accessors.class);
+        if (annotation.isMarking())
+            annotationNode.addWarning("Accessors on its own does nothing. Set at least one parameter");
+    }
 }

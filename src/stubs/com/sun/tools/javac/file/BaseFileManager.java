@@ -12,7 +12,13 @@ import java.nio.charset.Charset;
 import java.util.Map;
 
 public abstract class BaseFileManager implements JavaFileManager {
-	protected BaseFileManager(Charset charset) {}
-	public void setContext(Context context) {}
-	public boolean handleOptions(Map<Option, String> deferredFileManagerOptions) { return false; }
+    protected BaseFileManager(Charset charset) {
+    }
+
+    public void setContext(Context context) {
+    }
+
+    public boolean handleOptions(Map<Option, String> deferredFileManagerOptions) {
+        return false;
+    }
 }

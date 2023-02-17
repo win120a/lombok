@@ -1,7 +1,7 @@
 public class LoggerSlf4jInAnonymousClass {
-	Object annonymous = new Object() {
+    Object annonymous = new Object() {
 
-		class Inner {
-		}
-	};
+        class Inner {
+        }
+    };
 }

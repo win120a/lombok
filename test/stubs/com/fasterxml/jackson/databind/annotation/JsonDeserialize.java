@@ -8,5 +8,5 @@ import java.lang.annotation.Target;
 @Target({ElementType.ANNOTATION_TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.TYPE, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JsonDeserialize {
-	public Class<?> builder() default Void.class;
+    public Class<?> builder() default Void.class;
 }

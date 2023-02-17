@@ -1,4 +1,5 @@
 //version 8: Jackson deps are at least Java7+.
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,19 +15,19 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 public class JacksonBuilderSingular {
-	@JsonAnySetter
-	@Singular("any")
-	private Map<String, Object> any;
+    @JsonAnySetter
+    @Singular("any")
+    private Map<String, Object> any;
 
-	@JsonProperty("v_a_l_u_e_s")
-	@Singular
-	private List<String> values;
+    @JsonProperty("v_a_l_u_e_s")
+    @Singular
+    private List<String> values;
 
-	@JsonAnySetter
-	@Singular("guavaAny")
-	private ImmutableMap<String, Object> guavaAny;
+    @JsonAnySetter
+    @Singular("guavaAny")
+    private ImmutableMap<String, Object> guavaAny;
 
-	@JsonProperty("guava_v_a_l_u_e_s")
-	@Singular
-	private ImmutableList<String> guavaValues;
+    @JsonProperty("guava_v_a_l_u_e_s")
+    @Singular
+    private ImmutableList<String> guavaValues;
 }

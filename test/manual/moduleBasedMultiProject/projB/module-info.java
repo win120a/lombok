@@ -1,5 +1,5 @@
 module projB {
-	requires static lombok;
-	requires projA;
+    requires static lombok;
+    requires projA;
 }
 

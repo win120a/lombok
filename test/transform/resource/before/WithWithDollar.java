@@ -1,3 +1,4 @@
 class WithWithDollar {
-	@lombok.With int $i;
+    @lombok.With
+    int $i;
 }

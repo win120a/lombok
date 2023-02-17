@@ -8,5 +8,6 @@ import java.nio.file.Path;
 import javax.tools.JavaFileObject;
 
 public abstract class PathFileObject implements JavaFileObject {
-	protected PathFileObject(BaseFileManager fileManager, Path path) {}
+    protected PathFileObject(BaseFileManager fileManager, Path path) {
+    }
 }

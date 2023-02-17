@@ -5,8 +5,13 @@ import lombok.Singular;
 
 @lombok.Builder
 class BuilderSingularSets<T> {
-	@Singular private Set<T> dangerMice;
-	@Singular private SortedSet<? extends Number> octopodes;
-	@SuppressWarnings("all") @Singular("rawSet") private Set rawSet;
-	@Singular("stringSet") private Set<String> stringSet;
+    @Singular
+    private Set<T> dangerMice;
+    @Singular
+    private SortedSet<? extends Number> octopodes;
+    @SuppressWarnings("all")
+    @Singular("rawSet")
+    private Set rawSet;
+    @Singular("stringSet")
+    private Set<String> stringSet;
 }

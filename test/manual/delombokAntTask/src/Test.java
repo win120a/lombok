@@ -1,5 +1,6 @@
-@lombok.Builder @lombok.Value
+@lombok.Builder
+@lombok.Value
 public class Test {
-	String hello;
-	int world;
+    String hello;
+    int world;
 }

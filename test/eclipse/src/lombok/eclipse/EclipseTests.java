@@ -12,5 +12,5 @@ import lombok.eclipse.refactoring.RenameTest;
 @RunWith(Suite.class)
 @SuiteClasses({ExtractInterfaceTest.class, RenameTest.class, SelectTest.class, CleanupTest.class})
 public class EclipseTests {
-	
+
 }

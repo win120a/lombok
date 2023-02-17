@@ -1,3 +1,4 @@
 package java.lang;
 
-public abstract class Record {}
+public abstract class Record {
+}

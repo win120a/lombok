@@ -4,9 +4,9 @@ class LoggerCustomLog {
 }
 
 class MyLoggerFactory {
-	static MyLogger create(Class<?> clazz) {
-		return null;
-	}
+    static MyLogger create(Class<?> clazz) {
+        return null;
+    }
 }
 
 class MyLogger {
